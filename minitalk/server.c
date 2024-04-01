@@ -3,6 +3,59 @@
 #include <stdio.h>
 #include <unistd.h>
 
+
+void handle(int signal, siginfo_t *frs, void *ntg)
+{
+    static int c;
+    static int count = 7;
+    static int client_pid;
+    static int new_pid;
+    char x;
+    (void)ntg;
+    client_pid = frs->si_pid;
+    if (client_pid != new_pid)
+    {
+        count = 7;
+        c = 0;
+        new_pid = client_pid;
+    }
+    if(signal == SIGUSR1)
+        c |= (1 << count);
+    count--;
+    if (count < 0)
+    {
+        x = (char)c;
+        if (x == '\0')
+            kill(client_pid, SIGUSR1);
+        write (1, &x, 1);
+        count = 7;
+        c = 0;
+    }
+    // usleep(500);
+}
+int main()
+{
+    struct sigaction sa;
+    sa.sa_sigaction = handle;
+    sa.sa_flags = SA_SIGINFO;
+    printf("i am a server\n");
+    printf("my pid is : %d\n", getpid());
+    sigaction(SIGUSR1, &sa, NULL);
+    sigaction(SIGUSR2, &sa, NULL);
+    while (1)
+    {
+        pause ();
+    }
+}
+
+
+
+/*
+#include <signal.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <unistd.h>
+
 int len = -1;
 
 int ft_strlen(char *str)
@@ -42,19 +95,28 @@ void	*ft_calloc(size_t count, size_t size)
 	return (p);
 }
 
-void handle(int client_bit)
+void handle(int signal, siginfo_t *frs, void *ntg)
 {
     static int c;
     static int count = 7;
     static char *string;
     static int i;
-
-    if(client_bit == SIGUSR1)
-        c |= ((1 << count));
+    static int client_pid;
+    static int new_pid;
+    // char x;
+    (void)ntg;
+    client_pid = frs->si_pid;
+    if (client_pid != new_pid)
+    {
+        count = 7;
+        c = 0;
+        new_pid = client_pid;
+    }
+    if(signal == SIGUSR1)
+        c |= (1 << count);
     count--;
     if (count < 0)
     {
-        // c += 48;
         if (len == -1)
         {
             len = c;
@@ -73,21 +135,27 @@ void handle(int client_bit)
                 i = 0;
             }
         }
+        // x = (char)c;
+        // write (1, &x, 1);
         count = 7;
         c = 0;
     }
-    usleep (500);
+    // usleep (90);
 }
 int main()
 {
+    struct sigaction sa;
+    sa.sa_sigaction = handle;
+    sa.sa_flags = SA_SIGINFO;
     printf("i am a server\n");
     printf("my pid is : %d\n", getpid());
-    sigaction(SIGUSR1, &handle, NULL);
-    sigaction(SIGUSR2, &handle, NULL);
-    // write (1, "dd\n", 3);
+    sigaction(SIGUSR1, &sa, NULL);
+    // signal(SIGUSR1, handle);
+    // signal(SIGUSR2, handle);
+    sigaction(SIGUSR2, &sa, NULL);
     while (1)
     {
-        
         pause ();
     }
 }
+*/
