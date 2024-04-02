@@ -1,0 +1,1 @@
+./client_bonus $(ps | grep server | awk 'NR == 1 {print $1}') "mahmoudvmfkvmrkvmrlv,lrv,lrv,lr,000😀😀😀😀😀😀😀"

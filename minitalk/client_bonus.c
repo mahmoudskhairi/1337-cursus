@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   client.c                                           :+:      :+:    :+:   */
+/*   client_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mskhairi <mskhairi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/28 16:14:25 by mskhairi          #+#    #+#             */
-/*   Updated: 2024/04/02 23:19:17 by mskhairi         ###   ########.fr       */
+/*   Created: 2024/04/02 23:09:56 by mskhairi          #+#    #+#             */
+/*   Updated: 2024/04/02 23:27:04 by mskhairi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,11 @@ void    send_len(int pid, int c)
         usleep(90);
     }
 }
+void handle(int signal)
+{
+    if(signal == SIGUSR1)
+        write(1, "the string is received succussfully , thanks !!!", 48);
+}
 
 int main(int ac, char **av)
 {
@@ -67,6 +72,7 @@ int main(int ac, char **av)
         char *str = av[2];
         int i = 0;
         int len = ft_strlen(av[2]);
+        signal(SIGUSR1, handle);
         send_len(pid, len);
         while (str[i])
         {

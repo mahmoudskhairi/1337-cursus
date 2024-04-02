@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   server_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mskhairi <mskhairi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/02 23:08:37 by mskhairi          #+#    #+#             */
-/*   Updated: 2024/04/02 23:08:40 by mskhairi         ###   ########.fr       */
+/*   Created: 2024/04/02 23:07:56 by mskhairi          #+#    #+#             */
+/*   Updated: 2024/04/02 23:21:13 by mskhairi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 #include <stdio.h>
 #include <unistd.h>
 
-int len = -1;
 
+int len = -1;
 
 int ft_strlen(char *str)
 {
@@ -25,6 +25,9 @@ int ft_strlen(char *str)
         i++;
     return (i);
 }
+
+
+
 
 void	*ft_memset(void *b, int c, size_t len)
 {
@@ -119,6 +122,7 @@ void handle(int signal, siginfo_t *frs, void *ntg)
             {
                 write(1, string, ft_strlen(string));
                 write(1, "\n", 1);
+                kill(client_pid, SIGUSR1);
                 free(string);
                 string = NULL;
                 i = 0;
@@ -136,7 +140,7 @@ int main()
     struct sigaction sa;
     sa.sa_sigaction = handle;
     sa.sa_flags = SA_SIGINFO;
-    printf("i am a server\n");
+    printf("i am a bonus_server\n");
     printf("my pid is : %d\n", getpid());
     sigaction(SIGUSR1, &sa, NULL);
     sigaction(SIGUSR2, &sa, NULL);
