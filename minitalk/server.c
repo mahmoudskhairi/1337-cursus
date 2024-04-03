@@ -6,14 +6,11 @@
 /*   By: mskhairi <mskhairi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 23:08:37 by mskhairi          #+#    #+#             */
-/*   Updated: 2024/04/02 23:08:40 by mskhairi         ###   ########.fr       */
+/*   Updated: 2024/04/03 00:56:04 by mskhairi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <signal.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <unistd.h>
+#include "minitalk.h"
 
 int len = -1;
 
@@ -24,35 +21,6 @@ int ft_strlen(char *str)
     while (str[i])
         i++;
     return (i);
-}
-
-void	*ft_memset(void *b, int c, size_t len)
-{
-	unsigned char	*s;
-
-	s = b;
-	while (len--)
-	{
-		*(unsigned char *)s++ = (unsigned char)c;
-	}
-	return (b);
-}
-
-void	*ft_calloc(size_t count, size_t size)
-{
-	size_t	bytes;
-	void	*p;
-    int i;
-
-    i = 0;
-	bytes = count * size;
-	if (size && bytes / size != count)
-		return (NULL);
-	p = malloc(bytes);
-	if (p == NULL)
-		return (NULL);
-    ft_memset(p, 0, bytes);
-	return (p);
 }
 
 void handle_len(int signal, int *len)
@@ -105,7 +73,8 @@ void handle(int signal, siginfo_t *frs, void *ntg)
     {
         if (check_alloc == -1)
         {
-            string = ft_calloc(len + 1, 1);
+            string = malloc(len + 1);
+            string[len] = 0;
             check_alloc = 0;
         }
         if(signal == SIGUSR1)
