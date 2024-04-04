@@ -6,7 +6,7 @@
 /*   By: mskhairi <mskhairi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 16:14:25 by mskhairi          #+#    #+#             */
-/*   Updated: 2024/04/02 23:38:47 by mskhairi         ###   ########.fr       */
+/*   Updated: 2024/04/04 08:03:45 by mskhairi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,9 @@ int	main(int ac, char **av)
 		str = av[2];
 		i = 0;
 		len = ft_strlen(av[2]);
+        //check if (pid > 2)
+        //check if pid true (no characters))
+        //check arguments
 		send_len(pid, len);
 		while (str[i])
 		{
