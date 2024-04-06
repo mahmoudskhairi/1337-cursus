@@ -6,7 +6,7 @@
 /*   By: mskhairi <mskhairi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 23:09:56 by mskhairi          #+#    #+#             */
-/*   Updated: 2024/04/04 08:03:21 by mskhairi         ###   ########.fr       */
+/*   Updated: 2024/04/06 18:12:20 by mskhairi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	send_len(int pid, int c)
 void	handle(int signal)
 {
 	if (signal == SIGUSR1)
-		write(1, "the string is received succussfully , thanks !!!", 48);
+		write(1, "\e[32;40mthe string is received succussfully , thanks !!!", 56);
 }
 
 int	main(int ac, char **av)
@@ -85,7 +85,6 @@ int	main(int ac, char **av)
         //check if (pid > 2)
         //check if pid true (no characters))
         //check arguments
-        
 		signal(SIGUSR1, handle);
 		send_len(pid, len);
 		while (str[i])

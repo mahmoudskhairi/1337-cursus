@@ -6,21 +6,11 @@
 /*   By: mskhairi <mskhairi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 16:14:25 by mskhairi          #+#    #+#             */
-/*   Updated: 2024/04/04 08:03:45 by mskhairi         ###   ########.fr       */
+/*   Updated: 2024/04/06 18:16:13 by mskhairi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
-
-int	ft_strlen(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i++])
-		;
-	return (--i);
-}
 
 void	send_char(char c, int pid)
 {
@@ -75,6 +65,7 @@ int	main(int ac, char **av)
 		str = av[2];
 		i = 0;
 		len = ft_strlen(av[2]);
+        ft_printf("len >> %d\n", len);
         //check if (pid > 2)
         //check if pid true (no characters))
         //check arguments
@@ -84,6 +75,7 @@ int	main(int ac, char **av)
 			send_char(str[i], pid);
 			i++;
 		}
+        ft_printf("hello\n");
 	}
 	else
 		write(1, "\n", 1);

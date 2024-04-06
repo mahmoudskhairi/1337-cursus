@@ -1,39 +1,69 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mskhairi <mskhairi@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/02 23:08:37 by mskhairi          #+#    #+#             */
-/*   Updated: 2024/04/03 00:56:04 by mskhairi         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+// /* ************************************************************************** */
+// /*                                                                            */
+// /*                                                        :::      ::::::::   */
+// /*   server.c                                           :+:      :+:    :+:   */
+// /*                                                    +:+ +:+         +:+     */
+// /*   By: mskhairi <mskhairi@student.42.fr>          +#+  +:+       +#+        */
+// /*                                                +#+#+#+#+#+   +#+           */
+// /*   Created: 2024/04/02 23:08:37 by mskhairi          #+#    #+#             */
+// /*   Updated: 2024/04/06 14:38:46 by mskhairi         ###   ########.fr       */
+// /*                                                                            */
+// /* ************************************************************************** */
 
 #include "minitalk.h"
 
-int len = -1;
+t_list  info;
 
-
-int ft_strlen(char *str)
+void ft_init()
 {
-    int i = 0;
-    while (str[i])
-        i++;
-    return (i);
+    info.c = 0;
+    info.count = 7;
+    info.i = 0;
+    info.len_bits = 31;
+    info.check_alloc = -1;
+    info.len = 0;
+    info.client_pid = 0;
 }
 
-void handle_len(int signal, int *len)
+void ft_alloc(int signal)
+{
+    if(signal == SIGUSR1)
+        info.c |= (1 << info.count);
+    info.count--;
+    if (info.count < 0)
+    {
+        info.string[info.i++] = (char)info.c;
+        if(ft_strlen(info.string) == info.len)
+        {
+            write(1, info.string, ft_strlen(info.string));
+            write(1, "\n", 1);
+            ft_free (&info.string);
+            info.i = 0;
+            info.len_bits = 31;
+            info.check_alloc = -1;
+        }
+        info.count = 7;
+        info.c = 0;
+    }
+}
+
+void handle_len(int signal)
 {
     static int c;
     static int count = 31;
 
+    if (info.check_alloc == -1)
+    {
+        info.string = ft_calloc(info.len + 1, 1);
+        if (!info.string)
+            exit(1);
+        info.check_alloc = 0;
+    }
     if(signal == SIGUSR1)
-        c |= (1 << count);
+        info.len |= (1 << count);
     count--;
     if (count < 0)
-    {
-        *len = c; 
+    {   
         count = 31;
         c = 0;
     }
@@ -42,71 +72,39 @@ void handle_len(int signal, int *len)
 
 void handle(int signal, siginfo_t *frs, void *ntg)
 {
-    static int c;
-    static int count = 7;
-    static char *string;
-    static int i;
-    static int client_pid;
-    static int new_pid;
-    static int len_bits = 31;
-    static int check_alloc = -1;
     (void)ntg;
-
-    client_pid = frs->si_pid;
-    if (client_pid != new_pid)
+    info.client_pid = frs->si_pid;
+    if (info.client_pid != info.new_pid)
     {
-        count = 7;
-        c = 0;
-        new_pid = client_pid;
-        len_bits = 31;
-        free(string);
-        string = NULL;
-        check_alloc = -1;
-        i = 0;
+        info.count = 7;
+        info.c = 0;
+        info.new_pid = info.client_pid;
+        info.len_bits = 31;
+        ft_free(&info.string);
+        info.check_alloc = -1;
+        info.i = 0;
+        info.len = 0;
     }
-    if (len_bits >= 0)
+    if (info.len_bits >= 0)
     {
-        handle_len(signal, &len);
-        len_bits--;
+        handle_len(signal);
+        info.len_bits--;
     }
     else
     {
-        if (check_alloc == -1)
-        {
-            string = malloc(len + 1);
-            string[len] = 0;
-            check_alloc = 0;
-        }
-        if(signal == SIGUSR1)
-            c |= (1 << count);
-        count--;
-        if (count < 0)
-        {
-            string[i] = (char)c;
-            i++;
-            if(ft_strlen(string) == len)
-            {
-                write(1, string, ft_strlen(string));
-                write(1, "\n", 1);
-                free(string);
-                string = NULL;
-                i = 0;
-                len_bits = 31;
-                check_alloc = -1;
-            }
-            count = 7;
-            c = 0;
-        }
+        ft_alloc(signal);
     }
 }
 
 int main()
 {
     struct sigaction sa;
+    
+    ft_init();
     sa.sa_sigaction = handle;
     sa.sa_flags = SA_SIGINFO;
-    printf("i am a server\n");
-    printf("my pid is : %d\n", getpid());
+    ft_printf("i am a server\n");
+    ft_printf("my pid is : %d\n", getpid());
     sigaction(SIGUSR1, &sa, NULL);
     sigaction(SIGUSR2, &sa, NULL);
     while (1)
@@ -114,3 +112,5 @@ int main()
         pause ();
     }
 }
+
+
