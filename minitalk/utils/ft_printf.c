@@ -6,19 +6,19 @@
 /*   By: mskhairi <mskhairi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 13:25:50 by mskhairi          #+#    #+#             */
-/*   Updated: 2024/04/06 13:49:15 by mskhairi         ###   ########.fr       */
+/*   Updated: 2024/04/08 08:52:01 by mskhairi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "utils.h"
 
-static	int ft_putchar(char c)
+static int	ft_putchar(char c)
 {
 	write(1, &c, 1);
 	return (1);
 }
 
-static	int ft_putnbr(int n)
+static int	ft_putnbr(int n)
 {
 	long	nbr;
 	int		count;
@@ -42,7 +42,7 @@ static	int ft_putnbr(int n)
 	return (count);
 }
 
-static	int ft_putstr(char *s)
+static int	ft_putstr(char *s)
 {
 	int	count;
 

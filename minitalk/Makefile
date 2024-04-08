@@ -1,53 +1,51 @@
-# CC = cc
-# CFLAGS = -Wall -Wextra -Werror
-# SERVER = server.c
-# BONUS_SERVER = server_bonus.c
-# CLIENT = client.c
-# BONUS_CLIENT = client_bonus.c
-# all : 
-# 	$(CC) $(CFLAGS) $(SERVER)	-o server																									
-# 	$(CC) $(CFLAGS) $(CLIENT) -o client
-
-# bonus : 
-# 	$(CC) $(CFLAGS) $(BONUS_SERVER) -o server_bonus
-# 	$(CC) $(CFLAGS) $(BONUS_CLIENT) -o client_bonus
-
-# clean : 
-# 	rm -rf server client
-# 	rm -rf server_bonus client_bonus
-
-# re : clean all
-
-
-
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-SRC = ft_strlen.c ft_calloc.c ft_printf.c ft_free.c client.c  server.c 
-OBJ = ${SRC:.c=.o}
-BSRC = ft_strlen.c ft_calloc.c ft_printf.c ft_free.c client.c  server.c server_bonus.c client_bonus.c
-BOBJ = ${BSRC:.c=.o}
-NAME = minitalk.a
+RM = rm -rf
+UTILS = ./utils/utils.a
 
-all: ${NAME}
+SERVER = server
+CLIENT = client
+SERVER_BONUS = server_bonus
+CLIENT_BONUS = client_bonus
 
-${NAME}: ${OBJ}
-	ar rcs ${NAME} ${OBJ}
+SV_MANDATORY = mandatory/server.c
+SV_OBJ = $(SV_MANDATORY:.c=.o)
 
-%.o:%.c
+CL_MANDATORY = mandatory/client.c
+CL_OBJ = $(CL_MANDATORY:.c=.o)
+
+SV_BONUS_SRC = bonus/server_bonus.c
+SV_BONUS_OBJ = $(SV_BONUS_SRC:.c=.o)
+
+CL_BONUS_SRC = bonus/client_bonus.c
+CL_BONUS_OBJ = $(CL_BONUS_SRC:.c=.o)
+
+all: $(SERVER) $(CLIENT)
+
+
+%.o:%.c ./includes/minitalk.h ./includes_bonus/minitalk_bonus.h
 	$(CC) $(CFLAGS) -c $< -o $@
 
-run: 
-	cc ${CFLAGS} server.c ${NAME} -o server
-	cc ${CFLAGS} client.c ${NAME} -o client
-
-bonus:
-	cc ${CFLAGS} server_bonus.c ${NAME} -o server_bonus
-	cc ${CFLAGS} client_bonus.c ${NAME} -o client_bonus
+$(UTILS):
+	$(MAKE) -C ./utils
+$(SERVER): $(SV_OBJ) $(UTILS)
+	$(CC) $(CFLAGS) $(SV_OBJ) $(UTILS) -o server
+$(CLIENT): $(CL_OBJ) $(UTILS)
+	$(CC) $(CFLAGS) $(CL_OBJ) $(UTILS) -o client
+	
+$(SERVER_BONUS): $(SV_BONUS_OBJ) $(UTILS)
+	$(CC) $(CFLAGS) $(SV_BONUS_OBJ) $(UTILS) -o server_bonus
+$(CLIENT_BONUS): $(CL_BONUS_OBJ) $(UTILS)
+	$(CC) $(CFLAGS) $(CL_BONUS_OBJ) $(UTILS) -o client_bonus
 
 clean:
-	rm -rf ${OBJ} ${BOBJ} server client server_bonus client_bonus
-
+	$(MAKE) clean -C ./utils
+	$(RM) $(SV_OBJ) $(CL_OBJ)
+	$(RM) $(SV_BONUS_OBJS) $(CL_BONUS_OBJ) 
 fclean: clean
-	rm -rf ${NAME} ${OBJ} 
-
+	$(MAKE) fclean -C ./utils
+	$(RM) $(SERVER) $(CLIENT)
+	$(RM) $(SERVER_BONUS) $(CLIENT_BONUS)
 re: fclean all
+
+bonus: $(SERVER_BONUS) $(CLIENT_BONUS)

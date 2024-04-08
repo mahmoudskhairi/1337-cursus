@@ -1,19 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free.c                                          :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mskhairi <mskhairi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/06 18:14:13 by mskhairi          #+#    #+#             */
-/*   Updated: 2024/04/06 18:15:11 by mskhairi         ###   ########.fr       */
+/*   Created: 2024/04/06 18:09:06 by mskhairi          #+#    #+#             */
+/*   Updated: 2024/04/08 08:50:29 by mskhairi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "utils.h"
 
-void ft_free(char **s)
+int	ft_strlen(char *str)
 {
-    free(*s);
-    *s = NULL;
+	int	j;
+
+	j = 0;
+	if (!str)
+		return (0);
+	while (str[j])
+		j++;
+	return (j);
 }

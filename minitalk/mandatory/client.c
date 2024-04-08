@@ -1,26 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   client_bonus.c                                     :+:      :+:    :+:   */
+/*   client.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mskhairi <mskhairi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/02 23:09:56 by mskhairi          #+#    #+#             */
-/*   Updated: 2024/04/06 18:12:20 by mskhairi         ###   ########.fr       */
+/*   Created: 2024/03/28 16:14:25 by mskhairi          #+#    #+#             */
+/*   Updated: 2024/04/08 09:04:42 by mskhairi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk_bonus.h"
-
-int	ft_strlen(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i++])
-		;
-	return (--i);
-}
+#include "../includes/minitalk.h"
 
 void	send_char(char c, int pid)
 {
@@ -62,12 +52,6 @@ void	send_len(int pid, int c)
 	}
 }
 
-void	handle(int signal)
-{
-	if (signal == SIGUSR1)
-		write(1, "\e[32;40mthe string is received succussfully , thanks !!!", 56);
-}
-
 int	main(int ac, char **av)
 {
 	int		pid;
@@ -75,24 +59,22 @@ int	main(int ac, char **av)
 	int		i;
 	int		len;
 
-	if (ac == 3)
+	if (ac == 3 && ft_atoi(av[1]) > 2)
 	{
-		pid = atoi(av[1]);
+		pid = ft_atoi(av[1]);
 		str = av[2];
 		i = 0;
 		len = ft_strlen(av[2]);
-        
-        //check if (pid > 2)
-        //check if pid true (no characters))
-        //check arguments
-		signal(SIGUSR1, handle);
-		send_len(pid, len);
-		while (str[i])
+		if (len == 0)
 		{
-			send_char(str[i], pid);
-			i++;
+			ft_printf("\e[31;40mInvalid message (empty)\n");
+			exit(1);
 		}
+		send_len(pid, len);
+		i = 0;
+		while (str[i])
+			send_char(str[i++], pid);
 	}
 	else
-		write(1, "\n", 1);
+        ft_printf("\e[31;40mSorry, Ivalid Number Of Arguments Or PID!!\e[0m");
 }
