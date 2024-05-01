@@ -6,7 +6,7 @@
 /*   By: mskhairi <mskhairi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 09:40:56 by mskhairi          #+#    #+#             */
-/*   Updated: 2024/04/28 12:29:46 by mskhairi         ###   ########.fr       */
+/*   Updated: 2024/04/30 16:23:55 by mskhairi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	ft_is_sorted(t_list **stack)
 
 	tmp = *stack;
 	if (ft_lstsize(tmp) < 2)
-		exit(0);
+		return (1);
 	while (tmp && ft_lstsize(tmp) >= 2)
 	{
 		num = tmp->index;

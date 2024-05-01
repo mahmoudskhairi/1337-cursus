@@ -8,8 +8,8 @@ NAME = push_swap
 NAME2 = checker
 PUSH_SWAP = src/push_swap.c
 PUSH_SWAPO = $(PUSH_SWAP:.c=.o)
-checker = ./src_bonus/checker_bonus.c ./src_bonus/checker_bonus_utils.c
-checker_obj = $(checker:.c=.o)
+checker_bonus = ./src_bonus/checker_bonus.c ./src_bonus/checker_bonus_utils.c
+checker_obj = $(checker_bonus:.c=.o)
 
 all : $(NAME)
 
@@ -30,13 +30,14 @@ fclean:
 	@echo "make fclean..."
 	@$(MAKE) fclean -C ./libft
 	@$(MAKE) fclean -C ./get_next_line
-	@${RM} $(NAME) $(NAME2) $(PUSH_SWAPO)
+	@${RM} $(NAME) $(NAME2) $(PUSH_SWAPO) $(checker_obj)
 
 bonus: $(NAME2)
 
 $(NAME2) : $(checker_obj) ./src_bonus/checker_bonus.h
 	@echo "make bonus..."
+	@$(MAKE) -C ./libft
 	@make -C ./get_next_line
-	@ $(CC) $(CFLAGS) $(checker) $(libft) $(get_next_line) -o checker
+	@$(CC) $(CFLAGS) $(checker_obj) $(libft) $(get_next_line) -o checker
 
 re: fclean all

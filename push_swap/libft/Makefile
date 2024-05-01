@@ -8,28 +8,26 @@ ft_strcmp.c  ft_strrchr.c ft_strtrim.c ft_substr.c ft_tolower.c ft_toupper.c\
 ft_lstadd_back_bonus.c ft_lstadd_front_bonus.c ft_lstclear_bonus.c ft_lstdelone_bonus.c \
 ft_lstiter_bonus.c ft_lstlast_bonus.c ft_lstmap_bonus.c ft_lstnew_bonus.c ft_lstsize_bonus.c ft_print_error.c\
 ft_lstfree_bonus.c ft_free.c ft_free_split.c ft_sort_tab.c ft_lstprev.c  ft_is_sorted.c ft_init_stack.c\
-swap.c rotate.c reverse_rotate.c push.c ft_indexing.c ft_sort_stack.c ft_print_stack.c ft_sort_functions.c\
+swap.c rotate.c reverse_rotate.c push.c  ft_indexing.c ft_sort_stack.c ft_print_stack.c ft_sort_functions.c\
 
 
 
 OBJ = ${SRC:.c=.o}
 NAME = libft.a
-SBONUS = 
 
-OBONUS = ${SBONUS:.c=.o}
 all: ${NAME}
 
 ${NAME}: ${OBJ} ${OBONUS}
-	@ar rcs ${NAME} ${OBJ} ${OBONUS}
+	@ar rcs ${NAME} ${OBJ}
 
 %.o:%.c libft.h
 	@$(CC) -c $(CFLAGS) $< -o $@
 
 clean:
-	@rm ${OBJ} ${OBONUS}
+	@rm ${OBJ}
 
 fclean:
-	@rm ${NAME} ${OBJ} ${OBONUS}
+	@rm ${NAME} ${OBJ}
 
 re: fclean all
 

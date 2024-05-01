@@ -6,7 +6,7 @@
 /*   By: mskhairi <mskhairi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 08:27:49 by mskhairi          #+#    #+#             */
-/*   Updated: 2024/04/29 16:52:46 by mskhairi         ###   ########.fr       */
+/*   Updated: 2024/04/30 16:30:50 by mskhairi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ void	ft_duplcate_nbrs(t_list **stack)
 	t_list	*ptr2;
 
 	ptr1 = *stack;
-	if (ft_lstsize(*stack) < 2)
-		exit(0);
 	while (ptr1)
 	{
 		ptr2 = ptr1->next;
@@ -35,7 +33,12 @@ void	ft_duplcate_nbrs(t_list **stack)
 
 void	check_r_rr(t_list **stack_a, t_list **stack_b, char *str)
 {
-	if (!ft_strcmp(str, "ra\n"))
+	if (!ft_strcmp(str, "ss\n"))
+	{
+		swap(stack_a);
+		swap(stack_b);
+	}
+	else if (!ft_strcmp(str, "ra\n"))
 		rotate(stack_a);
 	else if (!ft_strcmp(str, "rb\n"))
 		rotate(stack_b);
@@ -53,22 +56,31 @@ void	check_r_rr(t_list **stack_a, t_list **stack_b, char *str)
 		reverce_rotate(stack_a);
 		reverce_rotate(stack_b);
 	}
+	else
+		ft_print_error();
 }
 
 void	ft_commands(t_list **stack_a, t_list **stack_b, char *str)
 {
 	if (!ft_strcmp(str, "pa\n"))
+	{
 		push_a(stack_a, stack_b);
+		return ;
+	}
 	else if (!ft_strcmp(str, "pb\n"))
+	{
 		push_b(stack_a, stack_b);
+		return ;
+	}
 	else if (!ft_strcmp(str, "sa\n"))
-		swap(stack_a);
-	else if (!ft_strcmp(str, "sb\n"))
-		swap(stack_b);
-	else if (!ft_strcmp(str, "ss\n"))
 	{
 		swap(stack_a);
+		return ;
+	}
+	else if (!ft_strcmp(str, "sb\n"))
+	{
 		swap(stack_b);
+		return ;
 	}
 	check_r_rr(stack_a, stack_b, str);
 }
@@ -83,21 +95,16 @@ void	ft_read_input(t_list **stack_a, t_list **stack_b)
 		str = get_next_line(0);
 		if (!str)
 		{
-            ft_print_stack(*stack_a, *stack_b);
 			if (ft_is_sorted(stack_a) && !ft_lstsize(*stack_b))
-			{
 				ft_putendl_fd("OK", 1);
-				exit(0);
-			}
 			else
-			{
-				ft_putendl_fd("kO", 1);
-				exit(0);
-			}
+				ft_putendl_fd("KO", 1);
+			exit(0);
 		}
-        if (str[0] == '\n' || !ft_strcmp(str, "Error\n"))
-            ft_print_error();
+		if (str[0] == '\n')
+			ft_print_error();
 		ft_commands(stack_a, stack_b, str);
+		ft_free(&str);
 	}
 }
 

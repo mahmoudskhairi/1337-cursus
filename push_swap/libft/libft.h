@@ -6,7 +6,7 @@
 /*   By: mskhairi <mskhairi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 12:43:22 by mskhairi          #+#    #+#             */
-/*   Updated: 2024/04/29 13:20:37 by mskhairi         ###   ########.fr       */
+/*   Updated: 2024/04/30 15:41:28 by mskhairi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ void				ft_putchar_fd(char c, int fd);
 void				ft_putstr_fd(char *s, int fd);
 void				ft_putendl_fd(char *s, int fd);
 void				ft_putnbr_fd(int n, int fd);
-
 t_list				*ft_lstnew(int content);
 void				ft_lstadd_front(t_list **lst, t_list *new);
 int					ft_lstsize(t_list *lst);
@@ -77,7 +76,6 @@ void				ft_lstclear(t_list **lst, void (*del)(int));
 void				ft_lstiter(t_list *lst, void (*f)(int));
 t_list				*ft_lstmap(t_list *lst, int (*f)(int), void (*del)(int));
 void				ft_lstfree(t_list **lst);
-void				ft_init_stack(char **str, t_list **stack_a);
 void				ft_free_split(char **str);
 void				ft_free(char **str);
 t_list				*ft_lstprev(t_list *stack_a);
@@ -97,6 +95,7 @@ void				ft_print_stack(t_list *tmp1, t_list *tmp2);
 int					ft_search_max(t_list **stack_b);
 int					ft_is_sorted(t_list **stack);
 void				ft_indexing(t_list **stack);
+void				ft_init_stack(char **str, t_list **stack_a);
 void				ft_sort_stack(t_list **stack_a, t_list **stack_b,
 						int range);
 void				ft_sort_three(t_list **stack_a);

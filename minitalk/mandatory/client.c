@@ -6,7 +6,7 @@
 /*   By: mskhairi <mskhairi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 16:14:25 by mskhairi          #+#    #+#             */
-/*   Updated: 2024/04/08 09:04:42 by mskhairi         ###   ########.fr       */
+/*   Updated: 2024/04/24 21:42:10 by mskhairi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,12 @@ int	main(int ac, char **av)
 	int		i;
 	int		len;
 
-	if (ac == 3 && ft_atoi(av[1]) > 2)
+	if (ac == 3)
 	{
 		pid = ft_atoi(av[1]);
 		str = av[2];
 		i = 0;
-		len = ft_strlen(av[2]);
+		len = ft_strlen(str);
 		if (len == 0)
 		{
 			ft_printf("\e[31;40mInvalid message (empty)\n");

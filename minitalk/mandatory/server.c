@@ -6,7 +6,7 @@
 /*   By: mskhairi <mskhairi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 19:30:34 by mskhairi          #+#    #+#             */
-/*   Updated: 2024/04/08 08:11:33 by mskhairi         ###   ########.fr       */
+/*   Updated: 2024/04/24 21:38:45 by mskhairi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,5 @@ int	main(void)
 	sigaction(SIGUSR2, &sa, NULL);
 	while (1)
 	{
-		pause ();
 	}
 }

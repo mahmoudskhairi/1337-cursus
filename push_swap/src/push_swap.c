@@ -6,7 +6,7 @@
 /*   By: mskhairi <mskhairi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 17:50:42 by mskhairi          #+#    #+#             */
-/*   Updated: 2024/04/29 16:46:22 by mskhairi         ###   ########.fr       */
+/*   Updated: 2024/04/30 16:30:08 by mskhairi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ void	ft_push_swap(t_list **stack_a, t_list **stack_b)
 {
 	int	range;
 
+	if (ft_is_sorted(stack_a))
+		exit(0);
 	if (ft_lstsize(*stack_a) == 2)
 	{
 		sa(stack_a);
@@ -70,21 +72,18 @@ int	main(int ac, char *av[])
 	stack_b = NULL;
 	i = 1;
 	argms = NULL;
-	(void)stack_b;
 	if (ac >= 2)
 	{
 		while (av[i])
 		{
-			argms = ft_split(av[i], ' ');
+			argms = ft_split(av[i++], ' ');
 			ft_init_stack(argms, &stack_a);
 			ft_free_split(argms);
-			i++;
 		}
 		ft_duplcate_nbrs(&stack_a);
 		ft_indexing(&stack_a);
-		if (ft_is_sorted(&stack_a))
-			exit(0);
 		ft_push_swap(&stack_a, &stack_b);
-        ft_print_stack(stack_a, stack_b);
 	}
+	ft_lstfree(&stack_a);
+	return (0);
 }

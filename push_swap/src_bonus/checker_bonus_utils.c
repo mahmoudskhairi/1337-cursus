@@ -6,7 +6,7 @@
 /*   By: mskhairi <mskhairi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 12:24:02 by mskhairi          #+#    #+#             */
-/*   Updated: 2024/04/29 16:10:17 by mskhairi         ###   ########.fr       */
+/*   Updated: 2024/05/01 11:21:51 by mskhairi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,20 +80,3 @@ void	reverce_rotate(t_list **stack)
 		prev_node->next = NULL;
 	}
 }
-
-// void	rrb(t_list **stack_b)
-// {
-// 	t_list	*first_node;
-// 	t_list	*prev_node;
-// 	t_list	*last_node;
-
-// 	if (ft_lstsize(*stack_b) >= 2)
-// 	{
-// 		first_node = *stack_b;
-// 		prev_node = ft_lstprev(*stack_b);
-// 		last_node = ft_lstlast(*stack_b);
-// 		*stack_b = last_node;
-// 		last_node->next = first_node;
-// 		prev_node->next = NULL;
-// 	}
-// }
