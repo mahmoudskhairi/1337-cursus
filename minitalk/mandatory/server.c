@@ -6,7 +6,7 @@
 /*   By: mskhairi <mskhairi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 19:30:34 by mskhairi          #+#    #+#             */
-/*   Updated: 2024/04/24 21:38:45 by mskhairi         ###   ########.fr       */
+/*   Updated: 2024/05/12 11:30:12 by mskhairi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,13 @@ void	ft_alloc(int signal)
 {
 	if (g_info.check_alloc == -1)
 	{
-		g_info.string = ft_calloc(g_info.len + 1, 1);
-		if (!g_info.string)
-			exit(1);
+        // printf("%d\n",g_info.len);
+        if (g_info.len > 0)
+		    g_info.string = ft_calloc(g_info.len + 1, 1);
+        else
+            exit(1);
+		// if (!g_info.string)
+		// 	exit(1);
 		g_info.check_alloc = 0;
 	}
 	if (signal == SIGUSR1)

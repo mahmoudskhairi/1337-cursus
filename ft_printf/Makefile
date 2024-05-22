@@ -6,7 +6,7 @@
 #    By: mskhairi <mskhairi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/17 18:51:40 by mskhairi          #+#    #+#              #
-#    Updated: 2024/02/10 13:33:23 by mskhairi         ###   ########.fr        #
+#    Updated: 2024/05/22 15:30:37 by mskhairi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,17 +19,14 @@ NAME = libftprintf.a
 all: ${NAME}
 
 ${NAME}: ${OBJ}
-	ar rcs ${NAME} ${OBJ}
+	@ar rcs ${NAME} ${OBJ}
 %.o:%.c
-	$(CC) $(CFLAGS) -c $< -o $@
-
-main: 
-	cc ${CFLAGS} main.c ${NAME} -o main
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -rf ${OBJ}
+	@rm -rf ${OBJ}
 
 fclean:
-	rm -rf ${NAME} ${OBJ}
+	@rm -rf ${NAME} ${OBJ}
 
 re: fclean all

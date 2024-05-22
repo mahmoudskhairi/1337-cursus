@@ -21,31 +21,37 @@ CL_BONUS_SRC = bonus/client_bonus.c
 CL_BONUS_OBJ = $(CL_BONUS_SRC:.c=.o)
 
 all: $(SERVER) $(CLIENT)
-
-
+	@echo "                           █████                                              █████"
+	@echo "                          ░░███                                              ░░███" 
+	@echo " █████████████    ██████   ░███████   █████████████    ██████  █████ ████  ███████"
+	@echo "░░███░░███░░███  ░░░░░███  ░███░░███ ░░███░░███░░███  ███░░███░░███ ░███  ███░░███" 
+	@echo " ░███ ░███ ░███   ███████  ░███ ░███  ░███ ░███ ░███ ░███ ░███ ░███ ░███ ░███ ░███" 
+	@echo " ░███ ░███ ░███  ███░░███  ░███ ░███  ░███ ░███ ░███ ░███ ░███ ░███ ░███ ░███ ░███" 
+	@echo " █████░███ █████░░████████ ████ █████ █████░███ █████░░██████  ░░████████░░████████"
+	@echo "░░░░░ ░░░ ░░░░░  ░░░░░░░░ ░░░░ ░░░░░ ░░░░░ ░░░ ░░░░░  ░░░░░░    ░░░░░░░░  ░░░░░░░░" 
 %.o:%.c ./includes/minitalk.h ./includes_bonus/minitalk_bonus.h
-	$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 $(UTILS):
-	$(MAKE) -C ./utils
+	@$(MAKE) -C ./utils
 $(SERVER): $(SV_OBJ) $(UTILS)
-	$(CC) $(CFLAGS) $(SV_OBJ) $(UTILS) -o server
+	@$(CC) $(CFLAGS) $(SV_OBJ) $(UTILS) -o server
 $(CLIENT): $(CL_OBJ) $(UTILS)
-	$(CC) $(CFLAGS) $(CL_OBJ) $(UTILS) -o client
+	@$(CC) $(CFLAGS) $(CL_OBJ) $(UTILS) -o client
 	
 $(SERVER_BONUS): $(SV_BONUS_OBJ) $(UTILS)
-	$(CC) $(CFLAGS) $(SV_BONUS_OBJ) $(UTILS) -o server_bonus
+	@$(CC) $(CFLAGS) $(SV_BONUS_OBJ) $(UTILS) -o server_bonus
 $(CLIENT_BONUS): $(CL_BONUS_OBJ) $(UTILS)
-	$(CC) $(CFLAGS) $(CL_BONUS_OBJ) $(UTILS) -o client_bonus
+	@$(CC) $(CFLAGS) $(CL_BONUS_OBJ) $(UTILS) -o client_bonus
 
 clean:
-	$(MAKE) clean -C ./utils
-	$(RM) $(SV_OBJ) $(CL_OBJ)
-	$(RM) $(SV_BONUS_OBJS) $(CL_BONUS_OBJ) 
+	@$(MAKE) clean -C ./utils
+	@$(RM) $(SV_OBJ) $(CL_OBJ)
+	@$(RM) $(SV_BONUS_OBJS) $(CL_BONUS_OBJ) 
 fclean: clean
-	$(MAKE) fclean -C ./utils
-	$(RM) $(SERVER) $(CLIENT)
-	$(RM) $(SERVER_BONUS) $(CLIENT_BONUS)
+	@$(MAKE) fclean -C ./utils
+	@$(RM) $(SERVER) $(CLIENT)
+	@$(RM) $(SERVER_BONUS) $(CLIENT_BONUS)
 re: fclean all
 
 bonus: $(SERVER_BONUS) $(CLIENT_BONUS)
