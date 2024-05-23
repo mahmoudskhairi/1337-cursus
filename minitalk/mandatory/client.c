@@ -6,7 +6,7 @@
 /*   By: mskhairi <mskhairi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 16:14:25 by mskhairi          #+#    #+#             */
-/*   Updated: 2024/04/24 21:42:10 by mskhairi         ###   ########.fr       */
+/*   Updated: 2024/05/23 12:22:42 by mskhairi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,9 @@ int	main(int ac, char **av)
 	int		i;
 	int		len;
 
-	if (ac == 3)
+	if (ac == 3 && ft_atoi(av[1]) >= 0)
 	{
-		pid = ft_atoi(av[1]);
+	    pid = ft_atoi(av[1]);
 		str = av[2];
 		i = 0;
 		len = ft_strlen(str);
